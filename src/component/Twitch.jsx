@@ -10,7 +10,28 @@ class Twitch extends Component {
         }
     }
     componentDidMount () {
-        this.getData();
+        this.getStreamer();
+    }
+    
+    setImg(url, width, height) {
+      return url.replace(/{width}/i, width).replace(/{height}/i, height);
+    }
+    
+    getGame(id) {
+      fetch(`https://api.twitch.tv/helix/games?id=${id}`, {
+              method: 'GET',
+              headers: new Headers({
+                'Client-ID': 'dg02z8hegynkveisuu555wxuxr885j'
+              })})
+              .then(response => {
+                return response.json();
+              })
+              .then(d => {
+                this.setState({
+                  gameName : d.data[0]['name'],
+                  gameImg : d.data[0]['box_art_url']
+                })
+              })
     }
     
     getStream(id){
@@ -26,7 +47,11 @@ class Twitch extends Component {
                 d => {
                   this.setState({
                     streamerData: d,
-                    online : d.data.length>0
+                    online : d.data.length>0,
+                    streamTitle: d.data[0]['title'],
+                    streamImage: d.data[0]['thumbnail_url'],
+                    viewerCount : d.data[0]['viewer_count'],
+                    gameId: d.data[0]['game_id']
                   })
                 },
                 () => {
@@ -35,10 +60,13 @@ class Twitch extends Component {
                   });
                 }
               )
+              .then(id => {
+                this.getGame(this.state.gameId)
+                });
     }
     
-    getData(){
-       fetch(`https://api.twitch.tv/helix/users?login=freecodecamp`, {
+    getStreamer(){
+       fetch(`https://api.twitch.tv/helix/users?login=imaqtpie`, {
               method: 'GET',
               headers: new Headers({
                 'Client-ID': 'dg02z8hegynkveisuu555wxuxr885j'
@@ -52,9 +80,12 @@ class Twitch extends Component {
       .then(
         d => {
           this.setState({
-                    twitchData: d
+                    twitchData: d,
+                    displayName: d.data[0]['display_name'],
+                    description: d.data[0]['description'],
+                    profileImage: d.data[0]['profile_image_url'],
+                    streamId : d.data[0]["id"]
                   })
-          return d["data"][0]["id"];
         },
         () => {
           this.setState({
@@ -63,7 +94,7 @@ class Twitch extends Component {
         }
       )
       .then(id => { 
-        this.getStream(id);
+        this.getStream(this.state.streamId);
         });
     }
     
@@ -75,6 +106,11 @@ class Twitch extends Component {
                 <h1>{this.state.twitchData.data[0]['display_name']}</h1>
                 <h2>{this.state.twitchData.data[0]['description']}</h2>
                 <h1>{this.state.online? "Online!" : "Offline"}</h1>
+                {this.state.gameImg?
+                <img src={this.setImg(this.state.gameImg, 300, 600)} alt="..." />
+                  :
+                  <br/>
+                }
             </div>
         )
     }
