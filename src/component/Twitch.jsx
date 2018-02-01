@@ -104,13 +104,18 @@ class Twitch extends Component {
       
       if (this.state.requestFailed) return <p>Failed</p>;
       if (!this.state.twitchData) return <p>No answer</p>;
+      const displayName = this.state.twitchData.data[0]['display_name'];
+      const status = this.state.online ? "Online!" : "Offline";
+      const description = this.state.twitchData.data[0]['description'];
+      const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 500, 200) : '';
+      const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
         return (
             <div>
-                <h1>{this.state.twitchData.data[0]['display_name']}</h1>
-                <h2>{this.state.online ? "Online!" : "Offline"}</h2>
-                <h1>{this.state.twitchData.data[0]['description']}</h1>
-                {this.state.gameImg?
-                <img src={this.setImg(this.state.gameImg, 300, 600)} alt="..." />
+                <h1>{displayName}</h1>
+                <h2>{status}</h2>
+                <h1>{description}</h1>
+                {this.state.streamImage?
+                <img src={gameImg} alt="..." />
                   :
                   <br/>
                 }
