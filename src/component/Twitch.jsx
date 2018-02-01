@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 //import channels from '../variables/streamers.jsx';
-
 class Twitch extends Component {
     constructor (props) {
         super(props);
@@ -47,12 +47,17 @@ class Twitch extends Component {
                 d => {
                   this.setState({
                     streamerData: d,
-                    online : d.data.length>0,
+                    online : d.data.length>0
+                  })
+                  if (this.state.online) {
+                  this.setState({
                     streamTitle: d.data[0]['title'],
                     streamImage: d.data[0]['thumbnail_url'],
                     viewerCount : d.data[0]['viewer_count'],
                     gameId: d.data[0]['game_id']
                   })
+                  this.getGame(this.state.gameId)
+                }
                 },
                 () => {
                   this.setState({
@@ -60,9 +65,6 @@ class Twitch extends Component {
                   });
                 }
               )
-              .then(id => {
-                this.getGame(this.state.gameId)
-                });
     }
     
     getStreamer(){
@@ -99,13 +101,14 @@ class Twitch extends Component {
     }
     
     render () {
+      
       if (this.state.requestFailed) return <p>Failed</p>;
       if (!this.state.twitchData) return <p>No answer</p>;
         return (
             <div>
                 <h1>{this.state.twitchData.data[0]['display_name']}</h1>
-                <h2>{this.state.twitchData.data[0]['description']}</h2>
-                <h1>{this.state.online? "Online!" : "Offline"}</h1>
+                <h2>{this.state.online ? "Online!" : "Offline"}</h2>
+                <h1>{this.state.twitchData.data[0]['description']}</h1>
                 {this.state.gameImg?
                 <img src={this.setImg(this.state.gameImg, 300, 600)} alt="..." />
                   :
