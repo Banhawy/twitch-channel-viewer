@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import Card from './Card.jsx';
 //import channels from '../variables/streamers.jsx';
 class Twitch extends Component {
     constructor (props) {
@@ -13,10 +14,11 @@ class Twitch extends Component {
         this.getStreamer();
     }
     
+    // Takes in an image url sting with variable width and height and injects them in url string
     setImg(url, width, height) {
       return url.replace(/{width}/i, width).replace(/{height}/i, height);
     }
-    
+    // Api call to get streamer's game data: game name and image
     getGame(id) {
       fetch(`https://api.twitch.tv/helix/games?id=${id}`, {
               method: 'GET',
@@ -33,7 +35,7 @@ class Twitch extends Component {
                 })
               })
     }
-    
+    //Api call to get streamer's stream, set status, title, stream thumbnail, and viewer count
     getStream(id){
       fetch(`https://api.twitch.tv/helix/streams?user_id=${id}`, {
               method: 'GET',
@@ -66,7 +68,7 @@ class Twitch extends Component {
                 }
               )
     }
-    
+    // Api call to get and set streamer name, description, and profile image
     getStreamer(){
        fetch(`https://api.twitch.tv/helix/users?login=imaqtpie`, {
               method: 'GET',
@@ -107,15 +109,29 @@ class Twitch extends Component {
       const displayName = this.state.twitchData.data[0]['display_name'];
       const status = this.state.online ? "Online!" : "Offline";
       const description = this.state.twitchData.data[0]['description'];
+      const profileImage = this.state.profileImage ? this.setImg(this.state.profileImage, 500, 200) : '';
       const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 500, 200) : '';
       const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
         return (
             <div>
-                <h1>{displayName}</h1>
-                <h2>{status}</h2>
-                <h1>{description}</h1>
+                <Card 
+                  profileImage={profileImage}
+                  displayName={displayName}
+                  status={status}
+                  description={description}
+                />
                 {this.state.streamImage?
-                <img src={gameImg} alt="..." />
+                <div>
+                <img src={streamImage} alt="..." />
+                <iframe 
+                  src="https://player.twitch.tv/?channel=imaqtpie"
+                  height="200"
+                  width="400"
+                  scrolling="true"
+                  frameborder="1"
+                  allowfullscreen="true">
+                </iframe>
+                </div>
                   :
                   <br/>
                 }
