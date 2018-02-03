@@ -10,9 +10,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Generic React App</h1>
+          <h1 className="App-title">Twitch Streamers Hub</h1>
         </header>
-          <Twitch />
+          <Twitch streamer="dyrus"/>
       </div>
     );
   }
