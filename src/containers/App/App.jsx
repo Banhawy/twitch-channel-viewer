@@ -12,7 +12,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Twitch Streamers Hub</h1>
         </header>
-          <Twitch streamer="dyrus"/>
+          <div className="card-container">
+            <Twitch streamer="dyrus"/>
+          </div>
       </div>
     );
   }

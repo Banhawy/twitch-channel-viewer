@@ -70,7 +70,7 @@ class Twitch extends Component {
     }
     // Api call to get and set streamer name, description, and profile image
     getStreamer(){
-       fetch(`https://api.twitch.tv/helix/users?login=imaqtpie`, {
+       fetch(`https://api.twitch.tv/helix/users?login=${this.props.streamer}`, {
               method: 'GET',
               headers: new Headers({
                 'Client-ID': 'dg02z8hegynkveisuu555wxuxr885j'
@@ -112,6 +112,7 @@ class Twitch extends Component {
       const profileImage = this.state.profileImage ? this.setImg(this.state.profileImage, 500, 200) : '';
       const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 500, 200) : '';
       const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
+      const liveStream = `https://player.twitch.tv/?channel=${this.props.streamer}`
         return (
             <div>
                 <Card 
@@ -124,7 +125,7 @@ class Twitch extends Component {
                 <div>
                 <img src={streamImage} alt="..." />
                 <iframe 
-                  src="https://player.twitch.tv/?channel=imaqtpie"
+                  src={liveStream}
                   height="200"
                   width="400"
                   scrolling="true"
