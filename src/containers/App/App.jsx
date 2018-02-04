@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../assets/images/twitch-logo.png';
 import '../../assets/styles/styles.css';
-
+import channels from "../../variables/streamers.jsx";
 import Twitch from '../../component/Twitch';
 
 class App extends Component {
@@ -13,7 +13,14 @@ class App extends Component {
           <h1 className="App-title">Twitch Streamers Hub</h1>
         </header>
           <div className="card-container">
-            <Twitch streamer="dyrus"/>
+          {
+            channels.map((channel, index) => {
+            return (
+              <Twitch streamer={channel} />
+            );
+            })
+          }
+         
           </div>
       </div>
     );

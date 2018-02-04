@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 export class Card extends Component{
     render(){
         return (
-            <div className="card">
+            <div className="card-content">
                 <div className="profileImage">
                     <img src={this.props.profileImage} alt="..."/>
                 </div>

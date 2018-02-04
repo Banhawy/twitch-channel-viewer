@@ -114,7 +114,7 @@ class Twitch extends Component {
       const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
       const liveStream = `https://player.twitch.tv/?channel=${this.props.streamer}`
         return (
-            <div>
+            <div className="card-item">
                 <Card 
                   profileImage={profileImage}
                   displayName={displayName}

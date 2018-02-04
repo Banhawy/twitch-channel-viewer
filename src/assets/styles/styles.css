@@ -23,4 +23,16 @@ body {
   font-family: sans-serif; }
 
 .card-container {
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around; }
+  .card-container .card-item {
+    display: flex;
+    align-content: stretch; }
+    .card-container .card-item .card-content {
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.25rem;
+      max-width: 19rem;
+      word-wrap: break-word; }
+    .card-container .card-item .card {
+      border: none; }
