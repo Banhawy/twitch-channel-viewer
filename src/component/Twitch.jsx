@@ -43,8 +43,15 @@ class Twitch extends Component {
                 'Client-ID': 'dg02z8hegynkveisuu555wxuxr885j'
               })})
               .then(response => {
-                return response.json();
-              })
+                  if (!response.ok) {
+                    throw Error("Network request failed");
+                    console.log(response);
+                    this.setState({
+                      requestFailed: true
+                    });
+                  }
+                  else return response.json();
+                })
               .then (
                 d => {
                   this.setState({
@@ -104,30 +111,29 @@ class Twitch extends Component {
     
     render () {
       
-      if (this.state.requestFailed) return <p>Failed</p>;
+      // if (this.state.requestFailed) return <p>Failed</p>;
       if (!this.state.twitchData) return <p>No answer</p>;
       const displayName = this.state.twitchData.data[0]['display_name'];
       const status = this.state.online ? "Online!" : "Offline";
       const description = this.state.twitchData.data[0]['description'];
       const profileImage = this.state.profileImage ? this.setImg(this.state.profileImage, 500, 200) : '';
-      const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 500, 200) : '';
-      const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
-      const liveStream = `https://player.twitch.tv/?channel=${this.props.streamer}`
+      const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 300, 300) : '';
+      const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 300, 200) : '';
+      const liveStream = `https://player.twitch.tv/?autoplay=false&channel=${this.props.streamer}`
         return (
             <div className="card-item">
                 <Card 
-                  profileImage={profileImage}
+                  profileImage={this.state.streamImage? streamImage : profileImage}
                   displayName={displayName}
                   status={status}
                   description={description}
                 />
                 {this.state.streamImage?
                 <div>
-                <img src={streamImage} alt="..." />
                 <iframe 
                   src={liveStream}
                   height="200"
-                  width="400"
+                  width="300"
                   scrolling="true"
                   frameborder="1"
                   allowfullscreen="true">
