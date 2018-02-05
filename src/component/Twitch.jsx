@@ -43,30 +43,25 @@ class Twitch extends Component {
                 'Client-ID': 'dg02z8hegynkveisuu555wxuxr885j'
               })})
               .then(response => {
-                  if (!response.ok) {
-                    throw Error("Network request failed");
-                    console.log(response);
-                    this.setState({
-                      requestFailed: true
-                    });
-                  }
-                  else return response.json();
-                })
+                return response.json();
+              })
               .then (
                 d => {
-                  this.setState({
-                    streamerData: d,
-                    online : d.data.length>0
-                  })
-                  if (this.state.online) {
-                  this.setState({
-                    streamTitle: d.data[0]['title'],
-                    streamImage: d.data[0]['thumbnail_url'],
-                    viewerCount : d.data[0]['viewer_count'],
-                    gameId: d.data[0]['game_id']
-                  })
-                  this.getGame(this.state.gameId)
-                }
+                  if (d.data){
+                    this.setState({
+                      streamerData: d,
+                      online : d.data.length>0
+                    })
+                  }
+                    if (this.state.online) {
+                    this.setState({
+                      streamTitle: d.data[0]['title'],
+                      streamImage: d.data[0]['thumbnail_url'],
+                      viewerCount : d.data[0]['viewer_count'],
+                      gameId: d.data[0]['game_id']
+                    })
+                    this.getGame(this.state.gameId)
+                  }
                 },
                 () => {
                   this.setState({
@@ -111,28 +106,22 @@ class Twitch extends Component {
     
     render () {
       
-      // if (this.state.requestFailed) return <p>Failed</p>;
+      if (this.state.requestFailed) return <p>Failed</p>;
       if (!this.state.twitchData) return <p>No answer</p>;
       const displayName = this.state.twitchData.data[0]['display_name'];
-      const status = this.state.online ? "Online!" : "Offline";
+      const online = this.state.online ;
+      const status = online ? "Online!" : "Offline";
       const description = this.state.twitchData.data[0]['description'];
       const profileImage = this.state.profileImage ? this.setImg(this.state.profileImage, 500, 200) : '';
       const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 300, 300) : '';
-      const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 300, 200) : '';
-      const liveStream = `https://player.twitch.tv/?autoplay=false&channel=${this.props.streamer}`
-        return (
-            <div className="card-item">
-                <Card 
-                  profileImage={this.state.streamImage? streamImage : profileImage}
-                  displayName={displayName}
-                  status={status}
-                  description={description}
-                />
-                {this.state.streamImage?
+      const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
+      const liveStream = `https://player.twitch.tv/?channel=${this.props.streamer}`
+      const liveStreamDiv = this.state.streamImage?
                 <div>
+                <img src={streamImage} alt="..." />
                 <iframe 
                   src={liveStream}
-                  height="200"
+                  height="300"
                   width="300"
                   scrolling="true"
                   frameborder="1"
@@ -140,8 +129,16 @@ class Twitch extends Component {
                 </iframe>
                 </div>
                   :
-                  <br/>
-                }
+                  <br/>;
+        return (
+            <div key={this.props.key} className="card-item">
+                <Card 
+                  profileImage={online? streamImage : profileImage}
+                  displayName={displayName}
+                  status={status}
+                  online={online}
+                  description={description}
+                />
             </div>
         )
     }

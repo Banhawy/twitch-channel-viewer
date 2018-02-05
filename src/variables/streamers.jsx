@@ -1,3 +1,3 @@
-const channels = ["freecodecamp","test_channel", "uberdanger", "boxbox", "imaqtpie", "riotgames"];
+const channels = ["freecodecamp", "uberdanger", "boxbox", "riotgames", "dyrus", "undefined", "testchannel", "imaqtpie"];
 
 module.exports = channels;

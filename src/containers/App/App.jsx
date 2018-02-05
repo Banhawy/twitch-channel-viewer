@@ -16,7 +16,7 @@ class App extends Component {
           {
             channels.map((channel, index) => {
             return (
-              <Twitch streamer={channel} />
+              <Twitch key={index} streamer={channel} />
             );
             })
           }

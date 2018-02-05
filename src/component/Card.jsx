@@ -11,7 +11,7 @@ export class Card extends Component{
                 <div className="content">
                     <div className="user">
                             <h4 className="title">{this.props.displayName}</h4>
-                                <br />
+                                <div className={this.props.online ? "online" : "offline"}></div>
                                 <h5>{this.props.status}</h5>
                     </div>
                     <p className="description text-center">

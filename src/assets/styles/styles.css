@@ -25,14 +25,25 @@ body {
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  align-content: space-around; }
+  align-content: space-around;
+  justify-content: center;
+  padding: 7.5rem; }
   .card-container .card-item {
     display: flex;
     align-content: stretch; }
+    .card-container .card-item:hover {
+      cursor: pointer; }
     .card-container .card-item .card-content {
       border: 1px solid rgba(0, 0, 0, 0.125);
       border-radius: 0.25rem;
       max-width: 19rem;
       word-wrap: break-word; }
+      .card-container .card-item .card-content .online {
+        margin: 0 auto;
+        width: 24px;
+        height: 24px;
+        background-color: #ABFF00;
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px; }
     .card-container .card-item .card {
       border: none; }
