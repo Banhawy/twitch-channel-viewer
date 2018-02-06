@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 class Back extends Component {
-  // onClick(e){
-  //           this.props.onClick(e);
-  //         }
   render() {
     const liveStreamDiv = this.props.online?
                 <div key={this.props.key} >

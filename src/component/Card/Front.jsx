@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Card from './Card.jsx';
 
 class Front extends Component {
-  // onClick(e){
-  //           this.props.onClick(e);
-  //         }
   render() {
     return (
              <div key={this.props.key} className="card-item" >
