@@ -136,7 +136,7 @@ class Twitch extends Component {
       const liveStream = `https://player.twitch.tv/?channel=${this.props.streamer}`;
   
         return (
-          <div onClick={this.handleClick} className="card-flip">
+          <div className="card-flip">
             <ReactCardFlip isFlipped={this.state.isFlipped}>
               <Front key="front"
                     online={online}
@@ -145,6 +145,7 @@ class Twitch extends Component {
                     displayName={displayName}
                     status={status}
                     description={description}
+                    onClick={this.handleClick}
                     >
               </Front>
       
@@ -155,7 +156,8 @@ class Twitch extends Component {
                     viewerCount={this.state.viewerCount}
                     totalViews={this.state.totalViews}
                     liveStream={liveStream}
-                    profileImage={offlineImg}>
+                    profileImage={offlineImg}
+                    onClick={this.handleClick}>
               </Back>
             </ReactCardFlip>
             </div>

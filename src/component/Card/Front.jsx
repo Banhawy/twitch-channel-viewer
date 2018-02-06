@@ -11,6 +11,7 @@ class Front extends Component {
                   status={this.props.status}
                   online={this.props.online}
                   description={this.props.description}
+                  onClick={this.props.onClick}
                 />
             </div>
       )
