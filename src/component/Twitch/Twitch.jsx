@@ -24,7 +24,11 @@ class Twitch extends Component {
     }
     // Takes in an image url sting with variable width and height and injects them in url string
     setImg(url, width, height) {
-      return url.replace(/{width}/i, width).replace(/{height}/i, height);
+      const regex = RegExp(/1920|1080/g);
+      return regex.test(url) ? 
+      url.replace(/1920/i, `${width}`).replace(/1080/i, `${height}`)
+      :
+      url.replace(/{width}/i, width).replace(/{height}/i, height);
     }
     // Api call to get streamer's game data: game name and image
     getGame(id) {
@@ -101,6 +105,7 @@ class Twitch extends Component {
                     description: d.data[0]['description'],
                     profileImage: d.data[0]['profile_image_url'],
                     totalViews: d.data[0]['view_count'],
+                    offlineImg: d.data[0]['offline_image_url'],
                     streamId : d.data[0]["id"]
                   })
         },
@@ -125,6 +130,7 @@ class Twitch extends Component {
       const status = online ? "Online!" : "Offline";
       const description = this.state.twitchData.data[0]['description'];
       const profileImage = this.state.profileImage ? this.setImg(this.state.profileImage, 300, 300) : '';
+      const offlineImg = this.state.offlineImg ? this.setImg(this.state.offlineImg, 300, 300) : profileImage;
       const streamImage = this.state.streamImage ? this.setImg(this.state.streamImage, 300, 300) : '';
       const gameImg = this.state.gameImg ? this.setImg(this.state.gameImg, 200, 400) : '';
       const liveStream = `https://player.twitch.tv/?channel=${this.props.streamer}`;
@@ -145,10 +151,11 @@ class Twitch extends Component {
               <Back key="back"
                     online={online}
                     user_url={user_url}
+                    gameName={this.state.gameName}
                     viewerCount={this.state.viewerCount}
                     totalViews={this.state.totalViews}
                     liveStream={liveStream}
-                    profileImage={profileImage}>
+                    profileImage={offlineImg}>
               </Back>
             </ReactCardFlip>
             </div>
