@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../../assets/images/twitch-logo.png';
 import '../../assets/styles/styles.css';
 import channels from "../../variables/streamers.jsx";
-import Twitch from '../../component/Twitch';
+import Twitch from '../../component/Twitch/Twitch';
 
 class App extends Component {
   render() {

@@ -4,6 +4,10 @@
     align-content: space-around;
     justify-content: center;
     padding: 7.5rem;
+    .card-flip{
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+    }
     .card-item {
         display: flex;
         align-content: stretch;
@@ -12,8 +16,6 @@
             cursor: pointer;
         }
         .card-content {
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.25rem;
             max-width: 19rem;
             word-wrap: break-word;
             .online{
@@ -33,5 +35,8 @@
         .card {
             border: none;
         }
+    }
+    .react-card-front{
+        position: relative;
     }
 }
