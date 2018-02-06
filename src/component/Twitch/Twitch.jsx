@@ -100,6 +100,7 @@ class Twitch extends Component {
                     displayName: d.data[0]['display_name'],
                     description: d.data[0]['description'],
                     profileImage: d.data[0]['profile_image_url'],
+                    totalViews: d.data[0]['view_count'],
                     streamId : d.data[0]["id"]
                   })
         },
@@ -119,6 +120,7 @@ class Twitch extends Component {
       if (this.state.requestFailed) return <p>Failed</p>;
       if (!this.state.twitchData) return <p>No answer</p>;
       const displayName = this.state.twitchData.data[0]['display_name'];
+      const user_url= `https://www.twitch.tv/${this.props.streamer}/videos/all`;
       const online = this.state.online ;
       const status = online ? "Online!" : "Offline";
       const description = this.state.twitchData.data[0]['description'];
@@ -142,6 +144,9 @@ class Twitch extends Component {
       
               <Back key="back"
                     online={online}
+                    user_url={user_url}
+                    viewerCount={this.state.viewerCount}
+                    totalViews={this.state.totalViews}
                     liveStream={liveStream}
                     profileImage={profileImage}>
               </Back>
